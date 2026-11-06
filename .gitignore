@@ -3,3 +3,6 @@ dist
 .DS_Store
 *.log
 .wrangler
+
+# Netlify CLI local site link
+.netlify

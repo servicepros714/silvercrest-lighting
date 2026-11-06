@@ -8,15 +8,19 @@ export const BUSINESS = {
   name: 'Silvercrest Lighting',
   short: 'Silvercrest',
   tagline: 'Christmas & permanent lighting, installed for you',
-  // TODO: phone given as 555-555-555 (9 digits). Replace with the real 10-digit number.
-  phoneDisplay: '555-555-555',
-  phoneHref: 'tel:555555555',
-  // TODO: replace the location placeholders with the real city / address.
-  city: 'Your City',
+  // Leave both empty to hide every phone link and "Call" button.
+  phoneDisplay: '714-844-0033',
+  phoneHref: 'tel:+17148440033',
+  // Verified business address.
+  street: '5217 E Orangethorpe Ave',
+  city: 'Anaheim',
   state: 'CA',
-  street: '123 Placeholder St',
-  zip: '00000',
-  email: '', // TODO (optional): public contact email
+  zip: '92807',
+  region: 'Orange County',
+  // Service-area business (crews travel to customers), so the street address stays private and the
+  // site shows "Anaheim, CA". Set to true only if customers are welcome at this address.
+  showStreetAddress: false,
+  email: '', // TODO (optional): public contact email — shown automatically once filled in
   googleReviewUrl: '', // TODO: Google review link, once the profile exists
   depositCents: 14900,
   depositLabel: '$149',
@@ -24,6 +28,25 @@ export const BUSINESS = {
 };
 
 export const addressLine = () => `${BUSINESS.street}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}`;
+/* What the website shows publicly: the full address only when showStreetAddress is true. */
+export const publicLocation = () => (BUSINESS.showStreetAddress ? addressLine() : `${BUSINESS.city}, ${BUSINESS.state}`);
+
+/* Online booking (calendar, deposits, live availability) needs the Worker API and Stripe.
+   While `online` is false, every booking button opens the quote-request form on /contact,
+   /book, /checkout and /confirmation redirect there, and the live availability board is hidden.
+   TODO: set to true once VITE_API_BASE and VITE_STRIPE_PUBLISHABLE_KEY are configured and tested. */
+export const BOOKING = { online: false };
+export const CTA = BOOKING.online
+  ? { to: '/book', label: 'Book Online', long: 'Book an Install' }
+  : { to: '/contact#quote', label: 'Request a Quote', long: 'Request a Quote' };
+
+/* Legal pages (Privacy, Terms, Cookies, Accessibility).
+   TODO: have the owner review every "Owner to confirm" note on those pages, update the
+   text, change `updated`, then set `showReviewNotes: false` to hide the notes. */
+export const LEGAL = {
+  updated: 'November 6, 2026',
+  showReviewNotes: false,
+};
 
 /* Booking step 1. */
 export const LIGHT_TYPES = [
@@ -88,20 +111,27 @@ export const ADDONS = [
   { id: 'Storage', name: 'Off-season storage', price: null, seasonalOnly: true },
 ];
 
-/* TODO: replace with the real cities your crew covers. The first one is the home base. */
+/* Cities shown on the service-area map. The first one is the home base; the crew serves
+   Anaheim and cities across Orange County. The footer shows the first six. */
 export const SERVICE_AREA = [
-  'Your City',
-  'Nearby City 1',
-  'Nearby City 2',
-  'Nearby City 3',
-  'Nearby City 4',
-  'Nearby City 5',
-  'Nearby City 6',
-  'Nearby City 7',
+  'Anaheim',
+  'Orange',
+  'Fullerton',
+  'Yorba Linda',
+  'Placentia',
+  'Brea',
+  'Garden Grove',
+  'Buena Park',
+  'Santa Ana',
+  'Tustin',
+  'Irvine',
+  'Huntington Beach',
 ];
 
 export const STEPS = [
-  { id: 'book', title: 'Book', text: 'Pick seasonal or permanent, your package and an install window online. Reserve with a deposit or pay at the visit.' },
+  BOOKING.online
+    ? { id: 'book', title: 'Book', text: 'Pick seasonal or permanent, your package and an install window online. Reserve with a deposit or pay at the visit.' }
+    : { id: 'book', title: 'Request a quote', text: 'Tell us about your home, the look you want and any add-ons. We’ll contact you to set up your design visit.' },
   { id: 'design', title: 'Design', text: 'We walk your roofline, check outlets and confirm the design and final price with you on site.' },
   { id: 'install', title: 'Install', text: 'Our crew hangs and tests every run, sets your timer and leaves the yard the way we found it.' },
   { id: 'takedown', title: 'Takedown', text: 'Seasonal lights come down after the holidays. Permanent lighting stays up and switches to any holiday.' },
@@ -139,6 +169,7 @@ export const FAQS = [
     a: 'Seasonal takedown starts after the holidays, usually in early January. We’ll reach out to schedule a day that works for you. Permanent lighting stays up year-round.', // TODO: confirm takedown timing
   },
   {
+    bookingOnly: true, // describes online checkout — hidden while BOOKING.online is false
     q: 'How does the deposit work?',
     a: 'You can reserve your install window with a $149 deposit, which is applied to your final invoice. Or choose “I’ll pay at the visit” at checkout and pay everything on install day.',
   },

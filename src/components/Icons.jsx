@@ -20,6 +20,12 @@ export const CloseIcon = (p) => (
 export const PinIcon = (p) => (
   <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" {...p}><path {...S} d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z" /><circle {...S} cx="12" cy="9.5" r="2.5" /></svg>
 );
+export const MailIcon = (p) => (
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" {...p}><rect {...S} x="3" y="5" width="18" height="14" rx="2.5" /><path {...S} d="M3.5 7l8.5 6 8.5-6" /></svg>
+);
+export const ClockIcon = (p) => (
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" {...p}><circle {...S} cx="12" cy="12" r="9" /><path {...S} d="M12 7v5l3 2" /></svg>
+);
 export const CalendarIcon = (p) => (
   <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" {...p}><rect {...S} x="3" y="4.5" width="18" height="17" rx="2.5" /><path {...S} d="M3 9.5h18M8 2.5v4M16 2.5v4" /></svg>
 );

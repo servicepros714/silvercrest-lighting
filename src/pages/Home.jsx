@@ -8,6 +8,7 @@ import ServiceArea from '../sections/ServiceArea.jsx';
 import FAQ from '../sections/FAQ.jsx';
 import FinalCTA from '../sections/FinalCTA.jsx';
 import useReveal from '../lib/useReveal.js';
+import { BOOKING } from '../data/business.js';
 
 /* Section order: Hero → Gallery → How it works → Packages → Season → Reviews →
    Service area → FAQ → Final CTA */
@@ -19,7 +20,7 @@ export default function Home() {
       <Gallery />
       <HowItWorks />
       <Packages />
-      <Season />
+      {BOOKING.online && <Season />}
       <Reviews />
       <ServiceArea />
       <FAQ />

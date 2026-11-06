@@ -1,7 +1,7 @@
 {
   "name": "Silvercrest Lighting",
   "short_name": "Silvercrest",
-  "description": "Christmas light and permanent lighting installation — book your install online.",
+  "description": "Christmas light and permanent lighting installation — request a quote online.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F2F4F7",

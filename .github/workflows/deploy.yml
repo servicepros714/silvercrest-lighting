@@ -1,20 +1,23 @@
-name: Deploy to Cloudflare Pages
+name: Build check
+
+# The site is hosted on Netlify (https://silvercrest-lighting.netlify.app) and deployed with the
+# Netlify CLI or Netlify's own Git integration. This workflow no longer deploys anywhere (it used to
+# deploy to Cloudflare Pages); it only makes sure every push still builds.
 
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      deployments: write
     steps:
       - uses: actions/checkout@v4
 
-      # No `cache: npm` here — the repo ships without package-lock.json.
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -22,22 +25,5 @@ jobs:
       - name: Install
         run: npm install --no-audit --no-fund
 
-      # Optional repo secrets override .env.local. Only non-empty values are written,
-      # so an unset secret can't blank out the committed value.
-      - name: Optional env overrides
-        run: |
-          if [ -n "$PK" ]; then echo "VITE_STRIPE_PUBLISHABLE_KEY=$PK" >> .env.production.local; fi
-          if [ -n "$API" ]; then echo "VITE_API_BASE=$API" >> .env.production.local; fi
-        env:
-          PK: ${{ secrets.VITE_STRIPE_PUBLISHABLE_KEY }}
-          API: ${{ secrets.VITE_API_BASE }}
-
       - name: Build
         run: npm run build
-
-      - name: Deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=silvercrest-lighting --branch=main

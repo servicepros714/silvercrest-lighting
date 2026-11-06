@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /book
+Disallow: /checkout
+Disallow: /confirmation
+
+Sitemap: https://silvercrest-lighting.netlify.app/sitemap.xml

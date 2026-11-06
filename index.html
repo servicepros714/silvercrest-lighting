@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <!-- TODO: replace "Your City" with the real city in the title, description, OG tags and JSON-LD below -->
-    <title>Christmas Light Installation in Your City, CA | Silvercrest Lighting</title>
-    <meta name="description" content="Silvercrest Lighting designs, installs, maintains and takes down Christmas lights and permanent roofline lighting in Your City, CA. Commercial-grade LEDs, leased — book your install window online." />
+    <!-- Business details here mirror src/data/business.js — update both together. -->
+    <title>Christmas &amp; Permanent Lighting Installation | Silvercrest Lighting · Anaheim, CA</title>
+    <meta name="description" content="Silvercrest Lighting designs, installs, maintains and takes down Christmas lights, and installs permanent roofline lighting in Anaheim and across Orange County, CA. Call 714-844-0033 or request a quote online." />
     <meta name="theme-color" content="#00152C" />
-    <link rel="canonical" href="https://silvercrest-lighting.pages.dev/" />
+    <meta name="google-site-verification" content="5psZjixDMl-hMg_EXvjDYl4QiV8rpFu73AYnLHV2wAg" />
+    <link rel="canonical" href="https://silvercrest-lighting.netlify.app/" />
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -17,16 +18,16 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Silvercrest Lighting" />
-    <meta property="og:title" content="Christmas Light Installation in Your City, CA | Silvercrest Lighting" />
-    <meta property="og:description" content="Christmas lights and permanent roofline lighting — designed, installed, maintained and taken down for you. Book your install window online." />
-    <meta property="og:url" content="https://silvercrest-lighting.pages.dev/" />
-    <meta property="og:image" content="https://silvercrest-lighting.pages.dev/og-image.jpg" />
+    <meta property="og:title" content="Christmas &amp; Permanent Lighting Installation | Silvercrest Lighting" />
+    <meta property="og:description" content="Christmas lights and permanent roofline lighting — designed, installed, maintained and taken down for you across Anaheim and Orange County, CA. Request a quote online." />
+    <meta property="og:url" content="https://silvercrest-lighting.netlify.app/" />
+    <meta property="og:image" content="https://silvercrest-lighting.netlify.app/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Christmas Light Installation in Your City, CA | Silvercrest Lighting" />
-    <meta name="twitter:description" content="Christmas lights and permanent roofline lighting, installed for you. Book online." />
-    <meta name="twitter:image" content="https://silvercrest-lighting.pages.dev/og-image.jpg" />
+    <meta name="twitter:title" content="Christmas &amp; Permanent Lighting Installation | Silvercrest Lighting" />
+    <meta name="twitter:description" content="Christmas lights and permanent roofline lighting, installed for you. Request a quote online." />
+    <meta name="twitter:image" content="https://silvercrest-lighting.netlify.app/og-image.jpg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,21 +39,32 @@
         "@type": "HomeAndConstructionBusiness",
         "name": "Silvercrest Lighting",
         "description": "Christmas light and permanent roofline lighting installation, maintenance and takedown.",
-        "url": "https://silvercrest-lighting.pages.dev/",
-        "image": "https://silvercrest-lighting.pages.dev/og-image.jpg",
-        "logo": "https://silvercrest-lighting.pages.dev/icon-512.png",
-        "telephone": "555-555-555",
+        "url": "https://silvercrest-lighting.netlify.app/",
+        "image": "https://silvercrest-lighting.netlify.app/og-image.jpg",
+        "logo": "https://silvercrest-lighting.netlify.app/icon-512.png",
+        "telephone": "+1-714-844-0033",
         "priceRange": "$$",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "123 Placeholder St",
-          "addressLocality": "Your City",
+          "addressLocality": "Anaheim",
           "addressRegion": "CA",
-          "postalCode": "00000",
+          "postalCode": "92807",
           "addressCountry": "US"
         },
         "areaServed": [
-          { "@type": "City", "name": "Your City" }
+          { "@type": "AdministrativeArea", "name": "Orange County, CA" },
+          { "@type": "City", "name": "Anaheim" },
+          { "@type": "City", "name": "Orange" },
+          { "@type": "City", "name": "Fullerton" },
+          { "@type": "City", "name": "Yorba Linda" },
+          { "@type": "City", "name": "Placentia" },
+          { "@type": "City", "name": "Brea" },
+          { "@type": "City", "name": "Garden Grove" },
+          { "@type": "City", "name": "Buena Park" },
+          { "@type": "City", "name": "Santa Ana" },
+          { "@type": "City", "name": "Tustin" },
+          { "@type": "City", "name": "Irvine" },
+          { "@type": "City", "name": "Huntington Beach" }
         ],
         "openingHoursSpecification": [
           {
@@ -72,7 +84,21 @@
   </head>
   <body>
     <div id="root"></div>
-    <noscript>Silvercrest Lighting — call 555-555-555 to book your Christmas light install.</noscript>
+    <noscript>Silvercrest Lighting — Christmas and permanent lighting installation, serving Anaheim and Orange County, CA. Call 714-844-0033, or turn on JavaScript to view this site and request a quote.</noscript>
+    <!-- Static copy of the quote form so Netlify Forms detects it at deploy time.
+         Field names must match src/components/QuoteForm.jsx. -->
+    <form name="quote" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="location" />
+      <input type="text" name="lighting" />
+      <input type="text" name="package" />
+      <input type="text" name="stories" />
+      <input type="text" name="addons" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

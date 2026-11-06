@@ -2,7 +2,7 @@
    render it on /book, /checkout or /confirmation. */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BUSINESS } from '../data/business.js';
+import { BUSINESS, CTA } from '../data/business.js';
 import { PhoneIcon } from './Icons.jsx';
 
 export default function MobileBar() {
@@ -21,9 +21,9 @@ export default function MobileBar() {
 
   return (
     <div className={`mbar ${shown ? 'is-shown' : ''}`} aria-hidden={!shown}>
-      <div className="actionbar">
-        <a className="btn btn--silver" href={BUSINESS.phoneHref} tabIndex={shown ? 0 : -1}><PhoneIcon /> Call Now</a>
-        <Link className="btn btn--gold" to="/book" tabIndex={shown ? 0 : -1}>Book Online</Link>
+      <div className={`actionbar ${BUSINESS.phoneHref ? '' : 'actionbar--single'}`}>
+        {BUSINESS.phoneHref && <a className="btn btn--silver" href={BUSINESS.phoneHref} tabIndex={shown ? 0 : -1}><PhoneIcon /> Call Now</a>}
+        <Link className="btn btn--gold" to={CTA.to} tabIndex={shown ? 0 : -1}>{CTA.label}</Link>
       </div>
     </div>
   );

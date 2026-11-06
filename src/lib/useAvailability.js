@@ -1,5 +1,6 @@
 import { createElement, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { getAvailability } from './api.js';
+import { BOOKING } from '../data/business.js';
 import { earliestOpen, seasonRange, slotKey } from './time.js';
 
 /* Booked slots for the current season, from the Worker (source-scoped there).
@@ -7,9 +8,11 @@ import { earliestOpen, seasonRange, slotKey } from './time.js';
 const AvailCtx = createContext(null);
 
 export function AvailabilityProvider({ children }) {
-  const [state, setState] = useState({ booked: new Set(), loading: true, error: '' });
+  // Online booking off → no Worker to ask; skip the request entirely.
+  const [state, setState] = useState({ booked: new Set(), loading: BOOKING.online, error: '' });
 
   const load = useCallback(async () => {
+    if (!BOOKING.online) return;
     const { start, end } = seasonRange();
     setState((s) => ({ ...s, loading: true, error: '' }));
     try {

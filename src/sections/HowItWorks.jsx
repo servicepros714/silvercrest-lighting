@@ -1,7 +1,7 @@
 /* TRAIL MAP: a winding trail climbs past four waypoints (Book → Design → Install →
    Takedown) to a summit flag. The trail draws in when it scrolls into view.
    Phones: a vertical trail with the same waypoints. */
-import { STEPS } from '../data/business.js';
+import { BOOKING, STEPS } from '../data/business.js';
 import { revealDelay } from '../lib/useReveal.js';
 
 const ICONS = {
@@ -18,7 +18,7 @@ export default function HowItWorks() {
         <header className="shead shead--center" data-reveal>
           <p className="eyebrow">How it works</p>
           <h2 id="how-title" className="h2">Four waypoints to a lit roofline</h2>
-          <p className="shead__sub">You book. We handle the climb — design, install, maintenance and takedown.</p>
+          <p className="shead__sub">{BOOKING.online ? 'You book.' : 'You reach out.'} We handle the climb — design, install, maintenance and takedown.</p>
         </header>
 
         <div className="trail" data-reveal>

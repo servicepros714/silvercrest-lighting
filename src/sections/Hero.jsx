@@ -3,9 +3,9 @@
    speeds; rooflines light bulb by bulb. Headline left, three trail-marker facts. */
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BUSINESS } from '../data/business.js';
+import { BOOKING, BUSINESS, CTA } from '../data/business.js';
 import useAvailability from '../lib/useAvailability.js';
-import { fmtDate, seasonRange } from '../lib/time.js';
+import { WINDOWS, fmtDate, seasonRange } from '../lib/time.js';
 import { prefersReducedMotion } from '../lib/useReveal.js';
 import { ArrowRight, Lantern, PhoneIcon, Swoosh } from '../components/Icons.jsx';
 
@@ -149,25 +149,37 @@ export default function Hero() {
         </h1>
         <p className="hero__sub">
           We design, hang, maintain and take down commercial-grade LED lights — or mount permanent
-          lighting once and switch it on for every holiday. Pick your install window online.
+          lighting once and switch it on for every holiday.{' '}
+          {BOOKING.online ? 'Pick your install window online.' : 'Tell us about your home and request a quote online.'}
         </p>
         <div className="hero__ctas">
-          <Link to="/book" className="btn btn--gold btn--lg">Book your install <ArrowRight /></Link>
-          <a href={BUSINESS.phoneHref} className="btn btn--ghost-light btn--lg"><PhoneIcon /> {BUSINESS.phoneDisplay}</a>
+          <Link to={CTA.to} className="btn btn--gold btn--lg">{BOOKING.online ? 'Book your install' : CTA.label} <ArrowRight /></Link>
+          {BUSINESS.phoneHref && (
+            <a href={BUSINESS.phoneHref} className="btn btn--ghost-light btn--lg"><PhoneIcon /> {BUSINESS.phoneDisplay}</a>
+          )}
         </div>
         <ul className="markers" aria-label="Season facts">
           <li className="marker">
             <span className="marker__k">Season</span>
             <span className="marker__v">{fmtDate(start, { month: 'short', day: 'numeric' })} – {fmtDate(end, { month: 'short', day: 'numeric' })}</span>
           </li>
-          <li className="marker">
-            <span className="marker__k">Earliest open</span>
-            <span className="marker__v">{earliestText}</span>
-          </li>
-          <li className="marker">
-            <span className="marker__k">Deposit</span>
-            <span className="marker__v">{BUSINESS.depositLabel}, applied</span>
-          </li>
+          {BOOKING.online ? (
+            <>
+              <li className="marker">
+                <span className="marker__k">Earliest open</span>
+                <span className="marker__v">{earliestText}</span>
+              </li>
+              <li className="marker">
+                <span className="marker__k">Deposit</span>
+                <span className="marker__v">{BUSINESS.depositLabel}, applied</span>
+              </li>
+            </>
+          ) : (
+            <li className="marker">
+              <span className="marker__k">Install windows</span>
+              <span className="marker__v">{WINDOWS.map((w) => w.label).join(' · ')}</span>
+            </li>
+          )}
         </ul>
       </div>
       <Swoosh className="hero__swoosh" />

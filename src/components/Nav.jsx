@@ -4,7 +4,7 @@
    contact panel with Call Now / Book Online rises from the bottom). */
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { BUSINESS } from '../data/business.js';
+import { BOOKING, BUSINESS, CTA } from '../data/business.js';
 import useAvailability from '../lib/useAvailability.js';
 import { fmtDate } from '../lib/time.js';
 import { CloseIcon, PeakIcon, PhoneIcon, PinIcon } from './Icons.jsx';
@@ -13,16 +13,17 @@ export const NAV_LINKS = [
   { id: 'gallery', label: 'Gallery' },
   { id: 'how', label: 'How it works' },
   { id: 'packages', label: 'Packages' },
-  { id: 'season', label: 'Season' },
+  { id: 'season', label: 'Season', bookingOnly: true }, // live availability board
   { id: 'area', label: 'Service area' },
   { id: 'faq', label: 'FAQ' },
-];
+].filter((l) => BOOKING.online || !l.bookingOnly);
 
 export function SeasonStatus({ compact = false }) {
   const { loading, earliest } = useAvailability();
   let text = 'Checking the calendar…';
   let tone = 'wait';
-  if (!loading) {
+  if (!BOOKING.online) { text = 'Now taking quote requests'; tone = 'open'; }
+  else if (!loading) {
     if (earliest) { text = `${compact ? 'Earliest' : 'Booking open · earliest'} ${fmtDate(earliest.date)}`; tone = 'open'; }
     else { text = 'This season is fully booked'; tone = 'full'; }
   }
@@ -100,9 +101,9 @@ function Shutter({ open, onClose, go }) {
           <p className="shutter__line"><PinIcon /> Serving {BUSINESS.city} &amp; nearby</p>
           <p className="shutter__line"><SeasonStatus /></p>
         </div>
-        <div className="actionbar">
-          <a className="btn btn--silver" href={BUSINESS.phoneHref}><PhoneIcon /> Call Now</a>
-          <Link className="btn btn--gold" to="/book" onClick={onClose}>Book Online</Link>
+        <div className={`actionbar ${BUSINESS.phoneHref ? '' : 'actionbar--single'}`}>
+          {BUSINESS.phoneHref && <a className="btn btn--silver" href={BUSINESS.phoneHref}><PhoneIcon /> Call Now</a>}
+          <Link className="btn btn--gold" to={CTA.to} onClick={onClose}>{CTA.label}</Link>
         </div>
       </div>
       <button type="button" className="shutter__scrim" tabIndex={-1} aria-hidden="true" onClick={onClose} />
@@ -170,7 +171,9 @@ export default function Nav() {
             <div className="hdr__util">
               <span className="hdr__util-item"><PinIcon /> {BUSINESS.city}, {BUSINESS.state}</span>
               <SeasonStatus />
-              <a className="hdr__util-item hdr__util-phone" href={BUSINESS.phoneHref}><PhoneIcon /> {BUSINESS.phoneDisplay}</a>
+              {BUSINESS.phoneHref && (
+                <a className="hdr__util-item hdr__util-phone" href={BUSINESS.phoneHref}><PhoneIcon /> {BUSINESS.phoneDisplay}</a>
+              )}
             </div>
             <div className="hdr__main">
               <nav className="hdr__links" ref={linksRef} aria-label="Primary" onMouseLeave={() => setHover('')}>
@@ -197,8 +200,10 @@ export default function Nav() {
                   <PeakIcon />
                 </span>
               </nav>
-              <Link to="/book" className="btn btn--gold hdr__book">Book Online</Link>
-              <a className="hdr__call" href={BUSINESS.phoneHref} aria-label={`Call ${BUSINESS.phoneDisplay}`}><PhoneIcon /></a>
+              <Link to={CTA.to} className="btn btn--gold hdr__book">{CTA.label}</Link>
+              {BUSINESS.phoneHref && (
+                <a className="hdr__call" href={BUSINESS.phoneHref} aria-label={`Call ${BUSINESS.phoneDisplay}`}><PhoneIcon /></a>
+              )}
               <button
                 type="button"
                 className="hdr__menu"

@@ -7,6 +7,8 @@ import { PeakIcon } from '../components/Icons.jsx';
 const REVIEWS = []; // TODO: [{ name: 'A. Customer', city: 'Your City', text: '…', source: 'Google' }]
 
 export default function Reviews() {
+  // No genuine reviews yet → don't show an empty guestbook on the live site.
+  if (!REVIEWS.length) return null;
   return (
     <section id="reviews" className="section reviews" aria-labelledby="rev-title">
       <div className="container">

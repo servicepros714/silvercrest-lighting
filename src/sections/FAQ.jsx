@@ -1,8 +1,11 @@
 /* FAQ with live search: type to filter questions + answers, matches are highlighted;
    accordion below. No match → call prompt. */
 import { useId, useMemo, useState } from 'react';
-import { BUSINESS, FAQS } from '../data/business.js';
+import { Link } from 'react-router-dom';
+import { BOOKING, BUSINESS, CTA, FAQS as ALL_FAQS } from '../data/business.js';
 import { ChevronDown, PhoneIcon, SearchIcon } from '../components/Icons.jsx';
+
+const FAQS = ALL_FAQS.filter((f) => BOOKING.online || !f.bookingOnly);
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -70,7 +73,9 @@ export default function FAQ() {
           {!items.length && (
             <div className="faq__none">
               <p>No answer matches “{term}”. Ask us directly — we’re happy to help.</p>
-              <a className="btn btn--navy" href={BUSINESS.phoneHref}><PhoneIcon /> {BUSINESS.phoneDisplay}</a>
+              {BUSINESS.phoneHref
+                ? <a className="btn btn--navy" href={BUSINESS.phoneHref}><PhoneIcon /> {BUSINESS.phoneDisplay}</a>
+                : <Link className="btn btn--navy" to="/contact#quote">Ask us a question</Link>}
             </div>
           )}
         </div>

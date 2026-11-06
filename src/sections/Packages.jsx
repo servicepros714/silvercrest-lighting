@@ -4,7 +4,7 @@
    One Book Now for the section. */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ADDONS, PACKAGES, STORY_OPTIONS } from '../data/business.js';
+import { ADDONS, BOOKING, CTA, PACKAGES, STORY_OPTIONS } from '../data/business.js';
 import { useDraft } from '../lib/draft.jsx';
 import { addonLabel, priceLabel } from '../lib/pricing.js';
 import { revealDelay } from '../lib/useReveal.js';
@@ -48,7 +48,7 @@ export default function Packages() {
 
   const bookNow = () => {
     update({ addons: picks });
-    navigate('/book');
+    navigate(CTA.to);
   };
 
   return (
@@ -99,7 +99,7 @@ export default function Packages() {
         <div className="lanterns" data-reveal>
           <div className="lanterns__head">
             <h3 className="h3">Light up your add-ons</h3>
-            <p className="lanterns__sub">Tap a lantern to add it. Your picks carry straight into booking.</p>
+            <p className="lanterns__sub">Tap a lantern to add it. Your picks carry straight into {BOOKING.online ? 'booking' : 'your quote request'}.</p>
           </div>
           <ul className="lanterns__row">
             {ADDONS.map((a, i) => {
@@ -120,9 +120,9 @@ export default function Packages() {
 
         <div className="packages__cta" data-reveal>
           <p className="packages__picks" aria-live="polite">
-            {picks.length ? <>Your add-ons: <b>{picks.join(', ')}</b></> : 'No add-ons picked — you can add them while booking.'}
+            {picks.length ? <>Your add-ons: <b>{picks.join(', ')}</b></> : `No add-ons picked — you can add them ${BOOKING.online ? 'while booking' : 'in your quote request'}.`}
           </p>
-          <button type="button" className="btn btn--gold btn--lg" onClick={bookNow}>Book Now <ArrowRight /></button>
+          <button type="button" className="btn btn--gold btn--lg" onClick={bookNow}>{BOOKING.online ? 'Book Now' : CTA.label} <ArrowRight /></button>
         </div>
       </div>
     </section>

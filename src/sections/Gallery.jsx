@@ -70,7 +70,7 @@ export default function Gallery() {
         <header className="shead gallery__head" data-reveal>
           <p className="eyebrow">Night installs</p>
           <h2 id="gal-title" className="h2">Rooflines worth slowing down for</h2>
-          <p className="shead__sub">Swipe the deck or pick a scene. Real install photos replace these design previews as the season’s jobs wrap up.</p>
+          <p className="shead__sub">Swipe the deck or pick a scene. These are illustrated previews of popular designs, not photos of finished installs.</p>
 
           <ol className="scene-index" aria-label="Scenes">
             {GALLERY.map((g, i) => (

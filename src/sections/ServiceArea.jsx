@@ -1,4 +1,5 @@
 /* TRAIL PATCHES: each city is a round stitched trail patch; the home base wears gold. */
+import { Link } from 'react-router-dom';
 import { BUSINESS, SERVICE_AREA } from '../data/business.js';
 import { revealDelay } from '../lib/useReveal.js';
 import { PhoneIcon } from '../components/Icons.jsx';
@@ -27,10 +28,12 @@ export default function ServiceArea() {
           <p className="eyebrow">Service area</p>
           <h2 id="area-title" className="h2">Every patch on our map</h2>
           <p className="shead__sub">
-            Our crews install across {BUSINESS.city} and the nearby neighborhoods. Don’t see your city?
-            Call — if your roofline is within a short drive, we can usually make it work.
+            Our crews install across {BUSINESS.city} and all over {BUSINESS.region}. Don’t see your city?
+            {BUSINESS.phoneHref ? 'Call' : 'Ask us'} — if your roofline is within a short drive, we can usually make it work.
           </p>
-          <a className="btn btn--navy" href={BUSINESS.phoneHref}><PhoneIcon /> Ask about your city</a>
+          {BUSINESS.phoneHref
+            ? <a className="btn btn--navy" href={BUSINESS.phoneHref}><PhoneIcon /> Ask about your city</a>
+            : <Link className="btn btn--navy" to="/contact#quote">Ask about your city</Link>}
         </header>
         <ul className="patches" aria-label="Cities we serve">
           {SERVICE_AREA.map((c, i) => <Patch key={c} city={c} home={i === 0} i={i} />)}
