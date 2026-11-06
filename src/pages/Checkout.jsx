@@ -3,7 +3,9 @@
    summary, and "I'll pay at the visit" as a plain text link at the bottom. */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js';
+// '/pure' only loads Stripe.js when loadStripe() runs (i.e. on checkout with a real key),
+// instead of injecting it on every page at import time.
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { Elements, ExpressCheckoutElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { BUSINESS } from '../data/business.js';
 import { useDraft } from '../lib/draft.jsx';
